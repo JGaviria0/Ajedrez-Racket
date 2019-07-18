@@ -1,0 +1,28 @@
+#lang racket
+(require (lib "graphics.ss""graphics"))
+(open-graphics) 
+(define ventana1 (open-viewport "Ajedrez"  500 600))
+(define (dibujar a b e)
+  (if (> e 8)
+      ((draw-rectangle ventana1) (make-posn 49 49) 401 401 "black")
+      (if (> a 400)
+          (dibujar 50 (+ b 50) (+ e 1))
+          (begin
+            (if(odd? e)
+               (if(odd?(/ a 50))
+                  (dibujar(+ a 50)b e)
+                  (begin
+                    ((draw-solid-rectangle ventana1)(make-posn a b)50 50 "Slate Blue")
+                    (dibujar(+ a 50)b e))     
+                  )
+               (if(odd?(/ a 50))
+                  (begin
+                    ((draw-solid-rectangle ventana1)(make-posn a b)50 50 "Slate Blue")
+                    (dibujar(+ a 50)b e))
+                  (dibujar(+ a 50)b e))        
+               )
+            )
+          )
+      )
+  ) 
+(dibujar 50 50 1)
